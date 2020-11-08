@@ -32,7 +32,6 @@ public class Proxy implements Subject{
             }
         }
         float r=primo;
-        System.out.println(primo);
         return (r/7);
     }
 
