@@ -49,10 +49,16 @@ public class Facade implements Subject{
     }
 
     public void agregarBiciUsuario(String nombre, String apellido, String documento, String fecha, String telefono, String direccion, String correo, String password) {
-        Componente prov = registros.get(registros.size()-1);
-        int Id = ((BiciUsuario) prov).getId();
-
-        BiciUsuario nuevo = new BiciUsuario(Id,nombre,apellido,documento,fecha,telefono,direccion,correo,password);
+        int id=0;
+        if(registros.size()==0){
+            id=0;
+        }else{
+            Componente prov = registros.get(registros.size()-1);
+            id = ((BiciUsuario) prov).getId()+1;
+        }
+        
+        
+        BiciUsuario nuevo = new BiciUsuario(id,nombre,apellido,documento,fecha,telefono,direccion,correo,password);
         registros.add(nuevo);
         Proxy p = Proxy.crearUnicaInstancia();
         p.addBiciUsuario(nuevo.getCorreo(), nuevo.getPassword());
