@@ -55,7 +55,7 @@ public class Facade implements Subject{
         }
         
         
-        BiciUsuario nuevo = new BiciUsuario(id,nombre,apellido,documento,fecha,telefono,direccion,correo,password);
+        BiciUsuario nuevo = new BiciUsuario(id,nombre,apellido,documento,fecha,direccion,telefono,correo,password);
         registros.add(nuevo);
         Proxy p = Proxy.crearUnicaInstancia();
         p.addBiciUsuario(nuevo.getCorreo(), nuevo.getPassword());
