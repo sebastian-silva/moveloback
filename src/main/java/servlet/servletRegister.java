@@ -27,16 +27,16 @@ public class servletRegister extends HttpServlet {
         Proxy proxy = Proxy.crearUnicaInstancia();
         String nombre = req.getParameter("nombre");
         String apellido = req.getParameter("apellido");
-        String documento = req.getParameter("Documento");
-        String fecha = req.getParameter("Fecha");
-        String telefono = req.getParameter("Telefono");
-        String direccion = req.getParameter("Direccion");
+        String documento = req.getParameter("documento");
+        String fecha = req.getParameter("fecha");
+        String telefono = req.getParameter("telefono");
+        String direccion = req.getParameter("direccion");
         String correo = req.getParameter("correo");
         String password = req.getParameter("password");
         
         String operacion = "2564823,agregarUsuario,"+nombre+","+apellido+","+documento+","+fecha+","+telefono+","+direccion+","+correo+","+password+",";
         proxy.ejecutarOperaciones(operacion);
-        
+
         
         float key = proxy.acceso(correo, password);
         HashMap<String, String> employeeMap = new HashMap<String,String>();        
