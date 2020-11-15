@@ -28,13 +28,17 @@ public class Facade implements Subject{
     public void ejecutarOperaciones(String operacion) {
         System.out.println("Funciona");
         String[] separador = operacion.split(",");
+        int n=0;
+        if(separador[0].equals("agregarUsuario")){
+            n=1;
+        }
 
-        switch (separador[0]) {
-            case "agregarUsuario":
+        switch (n) {
+            case 1:
                 this.agregarBiciUsuario(separador[1], separador[2], separador[3], separador[4], separador[5], separador[6], separador[7], separador[8]);
                 System.out.println(((BiciUsuario)registros.get(registros.size()-1)).toString());
                 break;
-            case "agregarEmpresa":
+            case 2:
                 break;
             default:
         }
