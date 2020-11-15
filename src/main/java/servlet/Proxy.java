@@ -20,10 +20,6 @@ public class Proxy implements Subject{
     }
 
     public float acceso(String correo, String password) {
-        if(sesion.size()==0){
-            sesion.put(2564823, "prueba");
-        }
-
         int primo=0;
         Iterator<Usuario> tempo = usuarios.iterator();
         while (tempo.hasNext()) {
@@ -39,9 +35,13 @@ public class Proxy implements Subject{
     }
 
     public void ejecutarOperaciones(String operacion) {
+        if(sesion.size()==0){
+            sesion.put(2564823, "prueba");
+        }
+        
         String[] a = operacion.split(",",2);
         float b = Float.parseFloat(a[0]);
-        System.out.println(""+b);
+        System.out.println("este"+b);
         b=b*7;
         int c = (int)b;
         if(this.existe(c)){
