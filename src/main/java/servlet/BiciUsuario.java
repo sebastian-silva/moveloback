@@ -5,7 +5,7 @@ public class BiciUsuario implements Componente {
     private int id;
     private String nombre;
     private String apellido;
-    private int documento;
+    private String documento;
     private String fecha;
     private String telefono;
     private String direccion;
@@ -13,7 +13,7 @@ public class BiciUsuario implements Componente {
     private String password;
     private Contenedor container = new Contenedor();
 
-    public BiciUsuario(int id, String nombre, String apellido, int documento, String fecha, String direccion, String telefono, String correo, String password){
+    public BiciUsuario(int id, String nombre, String apellido, String documento, String fecha, String direccion, String telefono, String correo, String password){
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -60,10 +60,10 @@ public class BiciUsuario implements Componente {
 		this.id = id;
 	}
 
-	public int getDocumento() {
+	public String getDocumento() {
 		return documento;
 	}
-	public void setDocumento(int documento) {
+	public void setDocumento(String documento) {
 		this.documento = documento;
 	}
 

@@ -20,15 +20,18 @@ public class Proxy implements Subject{
     }
 
     public float acceso(String correo, String password) {
+        if(sesion.size()==0){
+            sesion.put(2564823, "prueba");
+        }
+
         int primo=0;
         Iterator<Usuario> tempo = usuarios.iterator();
         while (tempo.hasNext()) {
             Usuario i = tempo.next();
-            System.out.println("entro");
             if (i.getLogin().equals(correo) && i.getPassword().equals(password)) {
                 primo = this.getPrime();
                 sesion.put(primo, i.getLogin());
-                fac.nuevaSesion(primo, i.getLogin());
+                fac.acceso(primo+"", i.getLogin());
             }
         }
         float r=primo;

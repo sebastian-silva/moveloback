@@ -16,43 +16,44 @@ public class Facade implements Subject{
         return unica;
     }
 
-    public void ejecutarOperaciones(String operacion) {
-        // System.out.println("Funciona");
-        // String[] separador = operacion.split(",");
-
-        // switch (separador[0]) {
-        //     case "agregarUsuario":
-        //         // this.agregarBiciUsuario(separador[1], separador[2], separador[3], separador[4], separador[5], separador[6], separador[7], separador[8], separador[9]);
-        //         break;
-        //     case "agregarEmpresa":
-        //         break;
-        //     default:
-        // }
-        // Proxy np = Proxy.crearUnicaInstancia();
-        // np.sesion.size();
-        // System.out.println(np.sesion.size());
-    }
-
     public float acceso(String correo, String password) {
+        this.sesion.put(Integer.parseInt(correo), password);
         return 0;
-    }
-
-    public void nuevaSesion(int key,String login){
-        this.sesion.put(key, login);
     }
 
     public void cerrarSesion(int key,String login){
         this.sesion.remove(key);
     }
 
-    public void agregarBiciUsuario(int id,String nombre, String apellido, int documento, String fecha, String telefono, String direccion, String correo, String password) {
-        BiciUsuario nuevo = new BiciUsuario(id,nombre,apellido,documento,fecha,telefono,direccion,correo,password);
+    public void ejecutarOperaciones(String operacion) {
+        System.out.println("Funciona");
+        String[] separador = operacion.split(",");
+
+        switch (separador[0]) {
+            case "agregarUsuario":
+                this.agregarBiciUsuario(separador[1], separador[2], separador[3], separador[4], separador[5], separador[6], separador[7], separador[8]);
+                System.out.println(((BiciUsuario)registros.get(registros.size()-1)).toString());
+                break;
+            case "agregarEmpresa":
+                break;
+            default:
+        }
+        // Proxy np = Proxy.crearUnicaInstancia();
+        // np.sesion.size();
+        // System.out.println(np.sesion.size());
+    }
+
+    public void agregarBiciUsuario(String nombre, String apellido, String documento, String fecha, String telefono, String direccion, String correo, String password) {
+        Componente prov = registros.get(registros.size()-1);
+        int Id = ((BiciUsuario) prov).getId();
+
+        BiciUsuario nuevo = new BiciUsuario(Id,nombre,apellido,documento,fecha,telefono,direccion,correo,password);
         registros.add(nuevo);
         Proxy p = Proxy.crearUnicaInstancia();
         p.addBiciUsuario(nuevo.getCorreo(), nuevo.getPassword());
     }
 
-    public void agregarBicicleta(int id,int serial,String marca,String modelo) {
+    /*public void agregarBicicleta(int id,int serial,String marca,String modelo) {
         boolean found=false;
         for(Componente cmp : registros){
             if(cmp instanceof BiciUsuario){
@@ -380,5 +381,5 @@ public class Facade implements Subject{
                 }
             }
         }
-    }
+    }*/
 }
