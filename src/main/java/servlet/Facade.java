@@ -31,6 +31,7 @@ public class Facade implements Subject{
         int n=0;
         if(separador[0].equals("agregarUsuario")){
             n=1;
+            System.out.println("entro 2");
         }
 
         switch (n) {
@@ -55,6 +56,7 @@ public class Facade implements Subject{
         registros.add(nuevo);
         Proxy p = Proxy.crearUnicaInstancia();
         p.addBiciUsuario(nuevo.getCorreo(), nuevo.getPassword());
+
     }
 
     /*public void agregarBicicleta(int id,int serial,String marca,String modelo) {

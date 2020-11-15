@@ -46,6 +46,7 @@ public class Proxy implements Subject{
         int c = (int)b;
         if(this.existe(c)){
             fac.ejecutarOperaciones(a[1]);
+            System.out.println("entro 1"+b);
         }
     }
 
