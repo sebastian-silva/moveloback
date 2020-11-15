@@ -37,15 +37,12 @@ public class Facade implements Subject{
         switch (n) {
             case 1:
                 this.agregarBiciUsuario(separador[1], separador[2], separador[3], separador[4], separador[5], separador[6], separador[7], separador[8]);
-                System.out.println(((BiciUsuario)registros.get(registros.size()-1)).toString());
+                System.out.println(((BiciUsuario)registros.get(registros.size()-1)).mostrarInformacion());
                 break;
             case 2:
                 break;
             default:
         }
-        // Proxy np = Proxy.crearUnicaInstancia();
-        // np.sesion.size();
-        // System.out.println(np.sesion.size());
     }
 
     public void agregarBiciUsuario(String nombre, String apellido, String documento, String fecha, String telefono, String direccion, String correo, String password) {
