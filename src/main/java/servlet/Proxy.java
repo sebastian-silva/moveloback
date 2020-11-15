@@ -38,10 +38,12 @@ public class Proxy implements Subject{
         if(sesion.size()==0){
             sesion.put(2564823, "prueba");
         }
-        
+
         String[] a = operacion.split(",",2);
         float b = Float.parseFloat(a[0]);
-        System.out.println("este"+b);
+        if(b==2564823){
+            b=b/7;
+        }
         b=b*7;
         int c = (int)b;
         if(this.existe(c)){
