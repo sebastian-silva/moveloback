@@ -8,36 +8,26 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.google.gson.Gson;
 
 @WebServlet(
-    name = "MyServletRegister", 
-    urlPatterns = {"/Regisusu"}
+    name = "MyServletEmail", 
+    urlPatterns = {"/verifcarEmail"}
 )
 
-public class servletRegister extends HttpServlet {
-    
+public class servletEmail extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         ServletOutputStream out = resp.getOutputStream();
         Proxy proxy = Proxy.crearUnicaInstancia();
-        String nombre = req.getParameter("nombre");
-        String apellido = req.getParameter("apellido");
-        String documento = req.getParameter("documento");
-        String fecha = req.getParameter("fecha");
-        String telefono = req.getParameter("telefono");
-        String direccion = req.getParameter("direccion");
         String correo = req.getParameter("correo");
-        String password = req.getParameter("password");
-        String operacion = "2564823,agregarUsuario,"+nombre+","+apellido+","+documento+","+fecha+","+telefono+","+direccion+","+correo+","+password+",";
-        proxy.ejecutarOperaciones(operacion);
-
+        Boolean existe = proxy.verificarCorreo(correo);
         
-        float key = proxy.acceso(correo, password);
         HashMap<String, String> employeeMap = new HashMap<String,String>();        
-        employeeMap.put("correo", correo);
-        employeeMap.put("key", key+"");
+        employeeMap.put("Existe", existe+"");
         Gson gson = new Gson();
         String jsonString = gson.toJson(employeeMap);
         out.println(jsonString);

@@ -25,24 +25,27 @@ public class Facade implements Subject{
         this.sesion.remove(key);
     }
 
-    public void ejecutarOperaciones(String operacion) {
-        System.out.println("Funciona");
+    public String ejecutarOperaciones(String operacion) {
+        String r="";
         String[] separador = operacion.split(",");
         int n=0;
         if(separador[0].equals("agregarUsuario")){
             n=1;
-            System.out.println("entro 2");
         }
 
         switch (n) {
             case 1:
                 this.agregarBiciUsuario(separador[1], separador[2], separador[3], separador[4], separador[5], separador[6], separador[7], separador[8]);
                 System.out.println(((BiciUsuario)registros.get(registros.size()-1)).mostrarInformacion());
+                r=((BiciUsuario)registros.get(registros.size()-1)).getCorreo()+" "+((BiciUsuario)registros.get(registros.size()-1)).getPassword();
                 break;
             case 2:
+                r="";
                 break;
             default:
+                r="";
         }
+        return r;
     }
 
     public void agregarBiciUsuario(String nombre, String apellido, String documento, String fecha, String telefono, String direccion, String correo, String password) {

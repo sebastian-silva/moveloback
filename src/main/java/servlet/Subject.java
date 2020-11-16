@@ -2,5 +2,5 @@ package servlet;
 
 public interface Subject {
     public float acceso(String correo, String password);
-    public void ejecutarOperaciones(String operacion);
+    public String ejecutarOperaciones(String operacion);
 }

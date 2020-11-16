@@ -34,7 +34,19 @@ public class Proxy implements Subject{
         return (r/7);
     }
 
-    public void ejecutarOperaciones(String operacion) {
+    public Boolean verificarCorreo(String correo) {
+        Boolean existe=false;
+        Iterator<Usuario> tempo = usuarios.iterator();
+        while (tempo.hasNext()) {
+            Usuario i = tempo.next();
+            if (i.getLogin().equals(correo)) {
+                existe=true;
+            }
+        }
+        return existe;
+    }
+
+    public String ejecutarOperaciones(String operacion) {
         if(sesion.size()==0){
             sesion.put(2564823, "prueba");
         }
@@ -47,8 +59,9 @@ public class Proxy implements Subject{
         b=b*7;
         int c = (int)b;
         if(this.existe(c)){
-            fac.ejecutarOperaciones(a[1]);
-            System.out.println("entro 1"+b);
+            return fac.ejecutarOperaciones(a[1]);
+        }else{
+            return "inicie sesion";
         }
     }
 
@@ -86,7 +99,6 @@ public class Proxy implements Subject{
         int c = (int)k;
         if(this.existe(c)){
             sesion.remove(c);
-            System.out.println("cerramos hp");
         }
     }
 
