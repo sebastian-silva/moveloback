@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 
 @WebServlet(
     name = "MyServletLogin", 
-    urlPatterns = {"/adicionarusu"}
+    urlPatterns = {"/Loginusu"}
 )
 
 public class servletLogin extends HttpServlet {
