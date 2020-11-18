@@ -2,6 +2,9 @@ package servlet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import com.google.gson.Gson;
 
 public class Facade implements Subject{
 
@@ -44,6 +47,12 @@ public class Facade implements Subject{
         if(separador[0].equals("alarma")){
             n=4;
         }
+        if(separador[0].equals("getalarmashos")){
+            n=5;
+        }
+        if(separador[0].equals("getalarmashos")){
+            n=5;
+        }
         switch (n) {
             case 1:
                 this.agregarBiciUsuario(separador[1], separador[2], separador[3], separador[4], separador[5], separador[6], separador[7], separador[8]);
@@ -65,6 +74,10 @@ public class Facade implements Subject{
                     this.alarmaHospital(Double.parseDouble(separador[2]),Double.parseDouble(separador[3]),separador[4]);
                 }
                 r="";
+                break;
+            case 5:
+
+                r=this.getAlarmasHos();
                 break;
             default:
                 r="";
@@ -131,5 +144,21 @@ public class Facade implements Subject{
         ((Hospital) seguridad.get(1)).add(a);
         // ((Hospital) seguridad.get(0)).mostrarInformacion()
         System.out.println(((Hospital) seguridad.get(1)).mostrarInformacion());
+    }
+
+    public String getAlarmasHos() {
+        Hospital hos = ((Hospital) seguridad.get(1));
+        List<AlarmaJson> objList = new ArrayList<AlarmaJson>();
+        for (int i = 0; i < hos.getAlarmas().tamano(); i++) {
+            Alarma ass = ((Alarma) hos.getChild(i));
+            Punto pun = ass.getUbicacion();
+            BiciUsuario bic = ass.getUsuario();
+            AlarmaJson s = new AlarmaJson(pun.getLatitud(), pun.getLongitud(), bic.getNombre(), bic.getApellido(), ass.getActiva());
+            objList.add(s);
+        }
+        // Convert the object to a JSON string
+        String json = new Gson().toJson(objList);
+        System.out.println(json);
+        return json;
     }
 }
