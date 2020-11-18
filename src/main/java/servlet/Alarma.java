@@ -12,10 +12,10 @@ public class Alarma implements ComponenteAlarma{
         this.usuario = usuario;
         this.activa = activa;
     }
-    
+
     public String mostrarInformacion() {
         // TODO Auto-generated method stub
-        return null;
+        return "Id: "+this.id+","+this.ubicacion.mostrarInformacion()+","+this.usuario.mostrarInformacion()+","+this.activa+",";
     }
 
     public int getId() {
