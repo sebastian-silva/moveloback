@@ -129,6 +129,16 @@ public class Proxy implements Subject{
         }
     }
 
+    public void addPolicia(String correo, String clave){
+        PoliciaUser e = new PoliciaUser(correo, clave);
+        usuarios.add(e);
+    }
+
+    public void addHospital(String correo, String clave){
+        HospitalUser e = new HospitalUser(correo, clave);
+        usuarios.add(e);
+    }
+
     public void modificarUsuario(String correo,String correonew,String clave){
         Iterator<Usuario> it = usuarios.iterator();
         while(it.hasNext()){

@@ -11,26 +11,22 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 @WebServlet(
-    name = "MyServletRegister", 
-    urlPatterns = {"/Regisusu"}
+    name = "MyServletSeguridad", 
+    urlPatterns = {"/Addsecurity"}
 )
 
-public class servletRegister extends HttpServlet {
+public class servletAddSec extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         ServletOutputStream out = resp.getOutputStream();
         Proxy proxy = Proxy.crearUnicaInstancia();
-        String nombre = req.getParameter("nombre");
-        String apellido = req.getParameter("apellido");
-        String documento = req.getParameter("documento");
-        String fecha = req.getParameter("fecha");
-        String telefono = req.getParameter("telefono");
-        String direccion = req.getParameter("direccion");
+        String tipo = req.getParameter("tipo");
+        String zona = req.getParameter("zona");
         String correo = req.getParameter("correo");
         String password = req.getParameter("password");
-        String operacion = "2564823,agregarUsuario,"+nombre+","+apellido+","+documento+","+fecha+","+telefono+","+direccion+","+correo+","+password+",";
+        String operacion = "2564823,"+tipo+","+zona+","+correo+","+password+",";
         proxy.ejecutarOperaciones(operacion);
         
         float key = proxy.acceso(correo, password);

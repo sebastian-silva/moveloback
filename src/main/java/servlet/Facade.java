@@ -8,6 +8,7 @@ public class Facade implements Subject{
     private static Facade unica = null;
     private HashMap<Integer, String> sesion = new HashMap<Integer,String>();
     private ArrayList<Componente> registros = new ArrayList<Componente>();
+    private ArrayList<ComponenteAlarma> seguridad = new ArrayList<ComponenteAlarma>();
 
     public static Facade crearUnicaInstancia() {
         if (unica == null) {
@@ -32,7 +33,12 @@ public class Facade implements Subject{
         if(separador[0].equals("agregarUsuario")){
             n=1;
         }
-
+        if(separador[0].equals("policia")){
+            n=2;
+        }
+        if(separador[0].equals("ambulancia")){
+            n=3;
+        }
         switch (n) {
             case 1:
                 this.agregarBiciUsuario(separador[1], separador[2], separador[3], separador[4], separador[5], separador[6], separador[7], separador[8]);
@@ -40,6 +46,14 @@ public class Facade implements Subject{
                 r=((BiciUsuario)registros.get(registros.size()-1)).getCorreo()+" "+((BiciUsuario)registros.get(registros.size()-1)).getPassword();
                 break;
             case 2:
+                this.addPolicia(separador[1], separador[2], separador[3]);
+                r="";
+                break;
+            case 3:
+                this.addHospital(separador[1], separador[2], separador[3]);
+                r="";
+                break;
+            case 4:
                 r="";
                 break;
             default:
@@ -56,342 +70,37 @@ public class Facade implements Subject{
             Componente prov = registros.get(registros.size()-1);
             id = ((BiciUsuario) prov).getId()+1;
         }
-        
-        
         BiciUsuario nuevo = new BiciUsuario(id,nombre,apellido,documento,fecha,direccion,telefono,correo,password);
         registros.add(nuevo);
         Proxy p = Proxy.crearUnicaInstancia();
         p.addBiciUsuario(nuevo.getCorreo(), nuevo.getPassword());
-
     }
 
-    /*public void agregarBicicleta(int id,int serial,String marca,String modelo) {
-        boolean found=false;
-        for(Componente cmp : registros){
-            if(cmp instanceof BiciUsuario){
-                if (((BiciUsuario) cmp).getId()==id) {
-                    Bicicleta bike = new Bicicleta(serial,marca,modelo);
-                    ((BiciUsuario) cmp).add(bike);
-                    found=true;
-                    break;
-                }
-            }else if(cmp instanceof Empresa){
-                if(((Empresa) cmp).tamano()!=0){
-                    for (int i = 0; i < ((Empresa) cmp).tamano(); i++) {
-                        Componente n = ((Empresa) cmp).getChild(i);
-                        if(n instanceof BiciUsuario){
-                            if(((BiciUsuario) n).getId()==id){
-                                Bicicleta bike = new Bicicleta(serial,marca,modelo);
-                                ((BiciUsuario) n).add(bike);  
-                                found=true;
-                            }
-                        }
-                    }
-                }
-            }
+    public void addPolicia(String cuadrante,String correo, String clave) {
+        int id=0;
+        if(seguridad.size()==0){
+            id=0;
+        }else{
+            ComponenteAlarma prov = seguridad.get(seguridad.size()-1);
+            id = ((Policia) prov).getId()+1;
         }
-    }
-
-    // public void agregarEmpresa(int nit, String nombre, String direccion, String correo, String password){
-    //     Empresa nuevo = new Empresa(nit,nombre,direccion,correo,password);
-    //     registros.add(nuevo);
-    //     Proxy p = Proxy.crearUnicaInstancia();
-    //     p.addEmpresaUsuario(nuevo.getCorreo(), nuevo.getPassword());
-    // }
-
-    public void agregarEmpleado(int id, int nit){
-        String nombre="";
-        String apellido="";
-        int documento=0;
-        String fecha="";
-        String telefono="";
-        String direccion="";
-        String correo="";
-        String password="";
-        for(Componente cmp : registros){
-            if(cmp instanceof BiciUsuario){
-                if (((BiciUsuario) cmp).getId()==id){
-                    nombre=((BiciUsuario) cmp).getNombre();
-                    apellido=((BiciUsuario) cmp).getApellido();
-                    documento=((BiciUsuario) cmp).getDocumento();
-                    fecha=((BiciUsuario) cmp).getFecha();
-                    telefono=((BiciUsuario) cmp).getTelefono();
-                    direccion=((BiciUsuario) cmp).getDireccion();
-                    correo=((BiciUsuario) cmp).getCorreo();
-                    password=((BiciUsuario) cmp).getPassword();
-                    registros.remove(cmp);
-                }
-            }
-        }
-        for(Componente cmp : registros){
-            if(cmp instanceof Empresa){
-                if(((Empresa) cmp).getNit()==nit){
-                    ((Empresa) cmp).add(new BiciUsuario(id,nombre,apellido,documento,fecha,telefono,direccion,correo,password));            
-                }
-            }
-        }
-    }
-
-    public void agregarMovelo(int nit, String nombre, String direccion, String correo, String password){
-        Movelo nuevo = new Movelo(nit,nombre,direccion,correo,password);
-        registros.add(nuevo);
+        Policia tombo = new Policia(id, cuadrante, correo, clave);
+        seguridad.add(tombo);
         Proxy p = Proxy.crearUnicaInstancia();
-        p.addMoveloUsuario(nuevo.getEmail(), nuevo.getClave());
+        p.addPolicia(correo, clave);
     }
 
-    public void modificarBiciusuario(int id,int idb,String nombre, String apellido, int documento, String fecha, String telefono, String direccion, String correo, String password){
-        for(Componente cmp : registros){
-            if(cmp instanceof BiciUsuario){
-                if (((BiciUsuario) cmp).getId()==id){
-                    ((BiciUsuario) cmp).setId(idb);
-                    ((BiciUsuario) cmp).setNombre(nombre);
-                    ((BiciUsuario) cmp).setApellido(apellido);
-                    ((BiciUsuario) cmp).setDocumento(documento);
-                    ((BiciUsuario) cmp).setFecha(fecha);
-                    ((BiciUsuario) cmp).setTelefono(telefono);
-                    ((BiciUsuario) cmp).setDireccion(direccion);
-                    ((BiciUsuario) cmp).setCorreo(correo);
-                    ((BiciUsuario) cmp).setPassword(password);
-                }
-            }else if(cmp instanceof Empresa){
-                if(((Empresa) cmp).tamano()!=0){
-                    for (int i = 0; i < ((Empresa) cmp).tamano(); i++) {
-                        Componente n = ((Empresa) cmp).getChild(i);
-                        if(n instanceof BiciUsuario){
-                            if(((BiciUsuario) n).getId()==id){
-                                ((BiciUsuario) n).setId(idb);
-                                ((BiciUsuario) n).setNombre(nombre);
-                                ((BiciUsuario) n).setApellido(apellido);
-                                ((BiciUsuario) n).setDocumento(documento);
-                                ((BiciUsuario) n).setFecha(fecha);
-                                ((BiciUsuario) n).setTelefono(telefono);
-                                ((BiciUsuario) n).setDireccion(direccion);
-                                ((BiciUsuario) n).setCorreo(correo);
-                                ((BiciUsuario) n).setPassword(password);
-                            }
-                        }
-                    }
-                }
-            }
+    public void addHospital(String cuadrante,String correo, String clave) {
+        int id=0;
+        if(seguridad.size()==0){
+            id=0;
+        }else{
+            ComponenteAlarma prov = seguridad.get(seguridad.size()-1);
+            id = ((Hospital) prov).getId()+1;
         }
+        Hospital tombo = new Hospital(id, cuadrante, correo, clave);
+        seguridad.add(tombo);
+        Proxy p = Proxy.crearUnicaInstancia();
+        p.addHospital(correo, clave);
     }
-
-    public void modificarEmpresa(int nit,int nitb, String nombre, String direccion, String correo, String password){
-        for(Componente cmp : registros){
-            if(cmp instanceof Empresa){
-                if(((Empresa) cmp).getNit()==nit){
-                    ((Empresa) cmp).setNit(nitb);
-                    ((Empresa) cmp).setNombre(nombre);
-                    ((Empresa) cmp).setDireccion(direccion);
-                    ((Empresa) cmp).setCorreo(correo);
-                    ((Empresa) cmp).setPassword(password);
-                }
-            }
-        }
-    }
-
-    public void modificarMovelo(int nit,int nitb, String nombre, String direccion, String correo, String password){
-        for(Componente cmp : registros){
-            if(cmp instanceof Movelo){
-                if(((Movelo) cmp).getNit()==nit){
-                    ((Movelo) cmp).setNit(nitb);
-                    ((Movelo) cmp).setNombre(nombre);
-                    ((Movelo) cmp).setDireccion(direccion);
-                    ((Movelo) cmp).setEmail(correo);
-                    ((Movelo) cmp).setClave(password);
-                }
-            }
-        }
-    }
-
-    public void modificarBicicleta(int serial,int serialb,String marca,String modelo){
-        for(Componente cmp : registros){
-            if(cmp instanceof BiciUsuario){
-                if(((BiciUsuario) cmp).tamano()!=0){
-                    for (int i = 0; i < ((BiciUsuario) cmp).tamano(); i++) {
-                        Componente n = ((BiciUsuario) cmp).getChild(i);
-                        if(n instanceof Bicicleta){
-                            if(((Bicicleta) n).getSerial()==serial){
-                                ((Bicicleta) n).setSerial(serialb);
-                                ((Bicicleta) n).setMarca(marca);
-                                ((Bicicleta) n).setModelo(modelo);
-                            }
-                        }
-                    }
-                }
-            }else if(cmp instanceof Empresa){
-                if(((Empresa) cmp).tamano()!=0){
-                    for (int i = 0; i < ((Empresa) cmp).tamano(); i++) {
-                        Componente n = ((Empresa) cmp).getChild(i);
-                        if(n instanceof BiciUsuario){
-                            if(((BiciUsuario) n).tamano()!=0){
-                                for (int j = 0; j < ((BiciUsuario) n).tamano(); j++) {
-                                    Componente m = ((BiciUsuario) cmp).getChild(j);
-                                    if(m instanceof Bicicleta){
-                                        if(((Bicicleta) m).getSerial()==serial){
-                                            ((Bicicleta) m).setSerial(serialb);
-                                            ((Bicicleta) m).setMarca(marca);
-                                            ((Bicicleta) m).setModelo(modelo);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void eliminarBicicleta(int serial){
-        for(Componente cmp : registros){
-            if(cmp instanceof BiciUsuario){
-                if(((BiciUsuario) cmp).tamano()!=0){
-                    for (int i = 0; i < ((BiciUsuario) cmp).tamano(); i++) {
-                        Componente n = ((BiciUsuario) cmp).getChild(i);
-                        if(n instanceof Bicicleta){
-                            if(((Bicicleta) n).getSerial()==serial){
-                                registros.remove(((Bicicleta) n));
-                            }
-                        }
-                    }
-                }
-            }else if(cmp instanceof Empresa){
-                if(((Empresa) cmp).tamano()!=0){
-                    for (int i = 0; i < ((Empresa) cmp).tamano(); i++) {
-                        Componente n = ((Empresa) cmp).getChild(i);
-                        if(n instanceof BiciUsuario){
-                            if(((BiciUsuario) n).tamano()!=0){
-                                for (int j = 0; j < ((BiciUsuario) n).tamano(); j++) {
-                                    Componente m = ((BiciUsuario) cmp).getChild(j);
-                                    if(m instanceof Bicicleta){
-                                        if(((Bicicleta) m).getSerial()==serial){
-                                            registros.remove(((Bicicleta) n));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void eliminarEmpresa(int nit){
-        for(Componente cmp : registros){
-            if(cmp instanceof Empresa){
-                if(((Empresa) cmp).getNit()==nit){
-                    registros.remove(((Empresa) cmp));
-                }
-            }
-        }
-    }
-
-    public void eliminarMovelo(int nit){
-        for(Componente cmp : registros){
-            if(cmp instanceof Movelo){
-                if(((Movelo) cmp).getNit()==nit){
-                    registros.remove(((Movelo) cmp));
-                }
-            }
-        }
-    }
-
-    public void eliminarBiciusuario(int id){
-        for(Componente cmp : registros){
-            if(cmp instanceof BiciUsuario){
-                if(((BiciUsuario) cmp).getId()==id){       
-                    registros.remove(((BiciUsuario) cmp));
-                }
-            }else if(cmp instanceof Empresa){
-                if(((Empresa) cmp).tamano()!=0){
-                    for (int i = 0; i < ((Empresa) cmp).tamano(); i++) {
-                        Componente n = ((Empresa) cmp).getChild(i);
-                        if(n instanceof BiciUsuario){
-                            if(((BiciUsuario) n).getId()==id){       
-                                registros.remove(((BiciUsuario) n));
-                            }           
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void buscarBicicleta(int serial){
-        for(Componente cmp : registros){
-            if(cmp instanceof BiciUsuario){
-                if(((BiciUsuario) cmp).tamano()!=0){
-                    for (int i = 0; i < ((BiciUsuario) cmp).tamano(); i++) {
-                        Componente n = ((BiciUsuario) cmp).getChild(i);
-                        if(n instanceof Bicicleta){
-                            if(((Bicicleta) n).getSerial()==serial){
-                                registros.remove(((Bicicleta) n));
-                            }
-                        }
-                    }
-                }
-            }else if(cmp instanceof Empresa){
-                if(((Empresa) cmp).tamano()!=0){
-                    for (int i = 0; i < ((Empresa) cmp).tamano(); i++) {
-                        Componente n = ((Empresa) cmp).getChild(i);
-                        if(n instanceof BiciUsuario){
-                            if(((BiciUsuario) n).tamano()!=0){
-                                for (int j = 0; j < ((BiciUsuario) n).tamano(); j++) {
-                                    Componente m = ((BiciUsuario) cmp).getChild(j);
-                                    if(m instanceof Bicicleta){
-                                        if(((Bicicleta) m).getSerial()==serial){
-                                            registros.remove(((Bicicleta) n));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void buscarEmpresa(int nit){
-        for(Componente cmp : registros){
-            if(cmp instanceof Empresa){
-                if(((Empresa) cmp).getNit()==nit){
-                    registros.remove(((Empresa) cmp));
-                }
-            }
-        }
-    }
-
-    public void buscarMovelo(int nit){
-        for(Componente cmp : registros){
-            if(cmp instanceof Movelo){
-                if(((Movelo) cmp).getNit()==nit){
-                    registros.remove(((Movelo) cmp));
-                }
-            }
-        }
-    }
-
-    public void buscarBiciusuario(int id){
-        for(Componente cmp : registros){
-            if(cmp instanceof BiciUsuario){
-                if(((BiciUsuario) cmp).getId()==id){       
-                    registros.remove(((BiciUsuario) cmp));
-                }
-            }else if(cmp instanceof Empresa){
-                if(((Empresa) cmp).tamano()!=0){
-                    for (int i = 0; i < ((Empresa) cmp).tamano(); i++) {
-                        Componente n = ((Empresa) cmp).getChild(i);
-                        if(n instanceof BiciUsuario){
-                            if(((BiciUsuario) n).getId()==id){       
-                                registros.remove(((BiciUsuario) n));
-                            }           
-                        }
-                    }
-                }
-            }
-        }
-    }*/
 }
