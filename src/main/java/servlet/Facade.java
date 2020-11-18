@@ -62,7 +62,7 @@ public class Facade implements Subject{
                 if(separador[1].equals("policia")){
                     this.alarmaPolicia(Double.parseDouble(separador[2]),Double.parseDouble(separador[3]),separador[4]);
                 }else{
-                    this.alarmaPolicia(Double.parseDouble(separador[2]),Double.parseDouble(separador[3]),separador[4]);
+                    this.alarmaHospital(Double.parseDouble(separador[2]),Double.parseDouble(separador[3]),separador[4]);
                 }
                 r="";
                 break;
