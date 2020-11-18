@@ -74,6 +74,7 @@ public class Facade implements Subject{
         registros.add(nuevo);
         Proxy p = Proxy.crearUnicaInstancia();
         p.addBiciUsuario(nuevo.getCorreo(), nuevo.getPassword());
+        
     }
 
     public void addPolicia(String cuadrante,String correo, String clave) {
@@ -88,6 +89,7 @@ public class Facade implements Subject{
         seguridad.add(tombo);
         Proxy p = Proxy.crearUnicaInstancia();
         p.addPolicia(correo, clave);
+        System.out.println("Policia");
     }
 
     public void addHospital(String cuadrante,String correo, String clave) {
@@ -102,5 +104,6 @@ public class Facade implements Subject{
         seguridad.add(tombo);
         Proxy p = Proxy.crearUnicaInstancia();
         p.addHospital(correo, clave);
+        System.out.println("Policia");
     }
 }
