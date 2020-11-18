@@ -9,6 +9,7 @@ public class Facade implements Subject{
     private HashMap<Integer, String> sesion = new HashMap<Integer,String>();
     private ArrayList<Componente> registros = new ArrayList<Componente>();
     private ArrayList<ComponenteAlarma> seguridad = new ArrayList<ComponenteAlarma>();
+    private int idsec=0;
 
     public static Facade crearUnicaInstancia() {
         if (unica == null) {
@@ -78,14 +79,8 @@ public class Facade implements Subject{
     }
 
     public void addPolicia(String cuadrante,String correo, String clave) {
-        int id=0;
-        if(seguridad.size()==0){
-            id=0;
-        }else{
-            ComponenteAlarma prov = seguridad.get(seguridad.size()-1);
-            id = ((Policia) prov).getId()+1;
-        }
-        Policia tombo = new Policia(id, cuadrante, correo, clave);
+        idsec=idsec+1;
+        Policia tombo = new Policia(idsec, cuadrante, correo, clave);
         seguridad.add(tombo);
         Proxy p = Proxy.crearUnicaInstancia();
         p.addPolicia(correo, clave);
@@ -93,17 +88,11 @@ public class Facade implements Subject{
     }
 
     public void addHospital(String cuadrante,String correo, String clave) {
-        int id=0;
-        if(seguridad.size()==0){
-            id=0;
-        }else{
-            ComponenteAlarma prov = seguridad.get(seguridad.size()-1);
-            id = ((Hospital) prov).getId()+1;
-        }
-        Hospital tombo = new Hospital(id, cuadrante, correo, clave);
+        idsec=idsec+1;
+        Hospital tombo = new Hospital(idsec, cuadrante, correo, clave);
         seguridad.add(tombo);
         Proxy p = Proxy.crearUnicaInstancia();
         p.addHospital(correo, clave);
-        System.out.println("Policia");
+        System.out.println("Hospital");
     }
 }
