@@ -128,8 +128,8 @@ public class Facade implements Subject{
             }
         }
         Alarma a = new Alarma(this.idal, ubicacion, bc, true);
-        ((Hospital) seguridad.get(0)).add(a);
+        ((Hospital) seguridad.get(1)).add(a);
         // ((Hospital) seguridad.get(0)).mostrarInformacion()
-        System.out.println(((Hospital) seguridad.get(0)).mostrarInformacion());
+        System.out.println(((Hospital) seguridad.get(1)).mostrarInformacion());
     }
 }
