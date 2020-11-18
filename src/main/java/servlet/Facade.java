@@ -153,7 +153,7 @@ public class Facade implements Subject{
             Alarma ass = ((Alarma) hos.getChild(i));
             Punto pun = ass.getUbicacion();
             BiciUsuario bic = ass.getUsuario();
-            AlarmaJson s = new AlarmaJson(pun.getLatitud(), pun.getLongitud(), bic.getNombre(), bic.getApellido(), ass.getActiva());
+            AlarmaJson s = new AlarmaJson(ass.getId(),pun.getLatitud(), pun.getLongitud(), bic.getNombre(), bic.getApellido(), ass.getActiva());
             objList.add(s);
         }
         // Convert the object to a JSON string

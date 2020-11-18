@@ -1,19 +1,23 @@
 package servlet;
 
 public class AlarmaJson {
+    int id;
     double latitud;
     double longitud;
     String nombre;
     String apellido;
     Boolean activa;
 
-    public AlarmaJson(double latitud, double longitud, String nombre, String apellido, Boolean activa) {
+    public AlarmaJson(int id,double latitud, double longitud, String nombre, String apellido, Boolean activa) {
+        this.id = id;
         this.latitud = latitud;
         this.longitud = longitud;
         this.nombre = nombre;
         this.apellido = apellido;
         this.activa = activa;
     }
+
+    
 
     public double getLatitud() {
         return latitud;
@@ -53,5 +57,13 @@ public class AlarmaJson {
 
     public void setActiva(Boolean activa) {
         this.activa = activa;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
