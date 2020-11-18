@@ -50,8 +50,11 @@ public class Facade implements Subject{
         if(separador[0].equals("getalarmashos")){
             n=5;
         }
-        if(separador[0].equals("getalarmashos")){
-            n=5;
+        if(separador[0].equals("getalarmaspol")){
+            n=6;
+        }
+        if(separador[0].equals("check")){
+            n=7;
         }
         switch (n) {
             case 1:
@@ -76,8 +79,14 @@ public class Facade implements Subject{
                 r="";
                 break;
             case 5:
-
                 r=this.getAlarmasHos();
+                break;
+            case 6:
+                r=this.getAlarmasHos();
+                break;
+            case 7:
+                this.check(separador[2]);
+                r="";
                 break;
             default:
                 r="";
@@ -160,5 +169,20 @@ public class Facade implements Subject{
         String json = new Gson().toJson(objList);
         System.out.println(json);
         return json;
+    }
+
+    public void check(String id){
+        int idp = Integer.parseInt(id);
+        for (int i = 0; i < seguridad.size(); i++) {
+            if(seguridad.get(i) instanceof Policia){
+                for (int j = 0; j < ((Policia) seguridad.get(i)).Alarmas.tamano(); j++) {
+                    if(((Alarma)((Policia) seguridad.get(i)).getChild(j)).id==idp){
+                        ((Alarma)((Policia) seguridad.get(i)).getChild(j)).setActiva(false);
+                    }
+                }
+            }else{
+
+            }    
+        }
     }
 }
