@@ -47,7 +47,7 @@ public class Hospital implements ComponenteAlarma{
     }
 
     public String mostrarInformacion() {
-        return "ID: "+this.id+"\n"+", Sector: "+this.sector+"\n"+", Correo: "+this.correo+"\n"+", Alarmas: "+this.Alarmas+"\n";
+        return "ID: "+this.id+"\n"+", Sector: "+this.sector+"\n"+", Correo: "+this.correo+"\n"+", Alarmas: "+this.Alarmas.mostrarInformacion()+"\n";
     }
 
     public void add(ComponenteAlarma a){
