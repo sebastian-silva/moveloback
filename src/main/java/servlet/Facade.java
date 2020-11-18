@@ -85,7 +85,7 @@ public class Facade implements Subject{
                 r=this.getAlarmasHos();
                 break;
             case 7:
-                this.check(separador[2]);
+                this.check(separador[1]);
                 r="";
                 break;
             default:
@@ -181,7 +181,11 @@ public class Facade implements Subject{
                     }
                 }
             }else{
-
+                for (int j = 0; j < ((Hospital) seguridad.get(i)).Alarmas.tamano(); j++) {
+                    if(((Alarma)((Hospital) seguridad.get(i)).getChild(j)).id==idp){
+                        ((Alarma)((Hospital) seguridad.get(i)).getChild(j)).setActiva(false);
+                    }
+                }
             }    
         }
     }
